@@ -93,10 +93,19 @@ cas:
       gzip:
         enabled: true
 
+  # Theme Configuration
+  theme:
+    default-theme-name: cas-theme
+
 # Spring Configuration
 spring:
   application:
     name: CAS Server
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+    mode: HTML
 
   # Main DataSource for Service/Ticket Registry
   datasource:
