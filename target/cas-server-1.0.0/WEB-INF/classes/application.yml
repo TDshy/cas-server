@@ -1,0 +1,148 @@
+#
+# CAS Server 7.x Configuration
+# For Tomcat 10 + JDK 17 + Spring 6
+#
+
+server:
+  servlet:
+    context-path: /cas
+  port: 8443
+  ssl:
+    enabled: true
+    key-store: file:/etc/cas/thekeystore
+    key-store-password: changeit
+    key-password: changeit
+  tomcat:
+    basedir: build/tomcat
+    uri-encoding: UTF-8
+
+# CAS Server Settings
+cas:
+  server:
+    name: https://localhost:8443
+    prefix: https://localhost:8443/cas
+
+  # Service Registry (JDBC)
+  service-registry:
+    jpa:
+      enabled: true
+      url: jdbc:mariadb://shuheyu.cn:3306/ruoyi?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8
+      user: ssm
+      password: Ssm@12345678
+      driver-class: org.mariadb.jdbc.Driver
+      ddl-auto: update
+      show-sql: false
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.MariaDBDialect
+          format_sql: true
+          jdbc:
+            batch_size: 10
+            fetch_size: 100
+      pool:
+        min-size: 6
+        max-size: 18
+        max-wait: 2000
+        timeout-millis: 1000
+
+  # Ticket Registry (JDBC)
+  ticket:
+    registry:
+      jpa:
+        enabled: true
+        url: jdbc:mariadb://shuheyu.cn:3306/ruoyi?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8
+        user: ssm
+        password: Ssm@12345678
+        driver-class: org.mariadb.jdbc.Driver
+        ddl-auto: update
+        show-sql: false
+        properties:
+          hibernate:
+            dialect: org.hibernate.dialect.MariaDBDialect
+        pool:
+          min-size: 6
+          max-size: 18
+          max-wait: 2000
+          timeout-millis: 1000
+
+  # JDBC Authentication (适配若依框架 sys_user 表)
+  authn:
+    jdbc:
+      query:
+        - sql: SELECT password FROM sys_user WHERE user_name = ? AND status = '0' AND del_flag = '0'
+          field-password: password
+          dialect: org.hibernate.dialect.MariaDBDialect
+          driver-class: org.mariadb.jdbc.Driver
+          url: jdbc:mariadb://shuheyu.cn:3306/ruoyi?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8
+          user: ssm
+          password: Ssm@12345678
+          pool:
+            min-size: 2
+            max-size: 10
+            max-wait: 2000
+            timeout-millis: 1000
+
+  # Logout Settings
+  logout:
+    follow-service-redirects: true
+    redirect-parameter: service
+
+  # Webflow Settings
+  webflow:
+    auto-configuration:
+      gzip:
+        enabled: true
+
+# Spring Configuration
+spring:
+  application:
+    name: CAS Server
+
+  # Main DataSource for Service/Ticket Registry
+  datasource:
+    url: jdbc:mariadb://shuheyu.cn:3306/ruoyi?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8
+    username: ssm
+    password: Ssm@12345678
+    driver-class-name: org.mariadb.jdbc.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 300000
+      max-lifetime: 1200000
+      connection-timeout: 20000
+
+  # JPA Settings
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
+        format_sql: true
+
+# Logging
+logging:
+  level:
+    org.apereo.cas: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.boot: DEBUG
+    org.hibernate.SQL: DEBUG
+    root: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: E:/Tomcat/apache-tomcat-10.1.33/logs/cas-debug.log
+    max-size: 100MB
+    max-history: 10
+
+# Management Endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      enabled: true
+      show-details: never
