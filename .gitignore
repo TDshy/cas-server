@@ -1,0 +1,28 @@
+# Compiled output
+target/
+*.war
+*.jar
+
+# Maven
+overlays/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp
+temp/
+tmp/
+build/
+
+# Node
+node_modules/
