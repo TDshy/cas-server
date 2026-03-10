@@ -35,8 +35,19 @@
         }
         
         .login-header h1 {
-            color: #333;
-            font-size: 28px;
+            color: #e74c3c;
+            font-size: 32px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .custom-badge {
+            background: #e74c3c;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            display: inline-block;
             margin-bottom: 10px;
         }
         
@@ -114,6 +125,7 @@
 <body>
     <div class="login-container">
         <div class="login-header">
+            <span class="custom-badge">自定义页面</span>
             <h1>欢迎登录</h1>
             <p>CAS 单点登录系统</p>
         </div>
@@ -122,7 +134,10 @@
              th:text="${errorMessage}">
         </div>
         
-        <form method="post" th:action="@{/login}">
+        <form method="post" id="fm1" th:action="@{/login}">
+            <input type="hidden" name="execution" th:value="${flowExecutionKey}"/>
+            <input type="hidden" name="_eventId" value="submit"/>
+            
             <div class="form-group">
                 <label for="username">用户名</label>
                 <input type="text" id="username" name="username" placeholder="请输入用户名" required autofocus>

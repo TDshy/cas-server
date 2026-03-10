@@ -13,9 +13,9 @@
     <description>CAS Authentication Server for Tomcat 10 + JDK 17</description>
 
     <properties>
-        <cas.version>7.1.0-RC6</cas.version>
+        <cas.version>7.0.0-RC6</cas.version>
         <springboot.version>3.2.0</springboot.version>
-        <java.version>21</java.version>
+        <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
