@@ -58,6 +58,42 @@
             <version>${cas.version}</version>
         </dependency>
 
+        <!-- CAS Web Security - 提供 ProtocolEndpointWebSecurityConfigurer 接口用于白名单配置 -->
+        <!-- 该模块会传递依赖：spring-security-web, spring-security-config, cas-server-core-web-api -->
+        <!-- 使用 provided scope，因为 overlay 的 WAR 包中已包含这些依赖 -->
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-support-webconfig</artifactId>
+            <version>${cas.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apereo.cas</groupId>
+                    <artifactId>cas-server-support-pac4j-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- CAS Core Web API - 提供 ProtocolEndpointWebSecurityConfigurer 接口 -->
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-core-web-api</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+
+        <!-- CAS Core Tickets - 提供 TicketGrantingTicket 支持 -->
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-core-tickets</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+
+        <!-- CAS Core Authentication - 提供 Authentication 支持 -->
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-core-authentication</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+
         <!-- MariaDB Connector -->
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>
@@ -70,6 +106,41 @@
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <version>8.2.0</version>
+        </dependency>
+
+        <!-- Spring Security Core - 提供 Authentication、SecurityContext 等核心类 -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>6.2.0</version>
+        </dependency>
+
+        <!-- Spring Security Config - 提供 WebSecurity 类 -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>6.2.0</version>
+        </dependency>
+
+        <!-- Spring Security Web - 提供 SecurityContextRepository 类 -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>6.2.0</version>
+        </dependency>
+
+        <!-- Spring JDBC - 提供 JdbcTemplate -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>6.1.1</version>
+        </dependency>
+
+        <!-- Druid 连接池 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-3-starter</artifactId>
+            <version>1.2.20</version>
         </dependency>
     </dependencies>
 
@@ -123,7 +194,7 @@
         </plugins>
     </build>
 
-    <repositories>
+    <!-- <repositories>
         <repository>
             <id>central</id>
             <url>https://repo.maven.apache.org/maven2</url>
@@ -132,5 +203,5 @@
             <id>apereo</id>
             <url>https://repo.apereo.org/maven/releases</url>
         </repository>
-    </repositories>
+    </repositories> -->
 </project>

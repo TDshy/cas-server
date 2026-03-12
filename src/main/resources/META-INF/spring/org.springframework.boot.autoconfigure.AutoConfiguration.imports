@@ -1,0 +1,2 @@
+org.apereo.cas.config.WhitelistSecurityConfiguration
+org.apereo.cas.config.DataSourceConfiguration

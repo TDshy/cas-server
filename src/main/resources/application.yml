@@ -53,21 +53,11 @@ cas:
     follow-service-redirects: true
     redirect-parameter: service
 
-  # Webflow Settings
-  webflow:
-    gzip:
-      enabled: true
 
   # Theme Configuration
   theme:
     default-theme-name: cas-theme
 
-  # Security Configuration - Web端点排除（绕过CAS认证）
-  security:
-    web:
-      # 添加到CAS默认排除列表中的额外路径
-      ignore-patterns:
-        - /test/public/**
 
 # Spring Configuration
 spring:
@@ -78,6 +68,10 @@ spring:
     suffix: .html
     cache: false
     mode: HTML
+  
+  # 显式扫描自定义组件
+  main:
+    allow-bean-definition-overriding: true
 
   # Note: Main DataSource removed - only authn.jdbc uses database now
 
@@ -106,3 +100,4 @@ management:
     health:
       enabled: true
       show-details: never
+

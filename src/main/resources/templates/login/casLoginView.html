@@ -155,5 +155,37 @@
             <p>© 2026 CAS Server. All rights reserved.</p>
         </div>
     </div>
+    
+    <script th:inline="javascript">
+        // 自动登录功能：从 Session 检查是否需要自动登录
+        (function() {
+            console.log('[Auto Login] Checking session...');
+            
+            // 从后端获取 Session 中的凭证和自动登录标记
+            fetch('/cas_server_war_exploded/api/public/session-credentials')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.autoLogin === 'true' && data.username && data.password) {
+                        console.log('[Auto Login] Enabled, auto filling credentials...');
+                        
+                        // 显示自动登录提示
+                        document.querySelector('.login-header h1').innerText = '正在自动登录...';
+                        document.querySelector('.login-header p').innerText = '请稍候';
+                        
+                        // 自动填充用户名和密码
+                        document.getElementById('username').value = data.username;
+                        document.getElementById('password').value = data.password;
+                        
+                        console.log('[Auto Login] Form filled from session, submitting...');
+                        document.getElementById('fm1').submit();
+                    } else {
+                        console.log('[Auto Login] Not enabled or no credentials');
+                    }
+                })
+                .catch(error => {
+                    console.error('[Auto Login] Error:', error);
+                });
+        })();
+    </script>
 </body>
 </html>
