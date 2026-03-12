@@ -71,6 +71,8 @@ cas:
       query:
         - sql: SELECT password FROM sys_user WHERE user_name = ? AND status = '0' AND del_flag = '0'
           field-password: password
+          password-encoder:
+            type: org.apereo.cas.authentication.MyPasswordEncoder
           dialect: org.hibernate.dialect.MariaDBDialect
           driver-class: org.mariadb.jdbc.Driver
           url: jdbc:mariadb://shuheyu.cn:3306/ruoyi?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8
