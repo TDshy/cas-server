@@ -51,17 +51,10 @@
             <version>${cas.version}</version>
         </dependency>
 
-        <!-- JPA Service Registry -->
+        <!-- JSON Service Registry (In-Memory) -->
         <dependency>
             <groupId>org.apereo.cas</groupId>
-            <artifactId>cas-server-support-jpa-service-registry</artifactId>
-            <version>${cas.version}</version>
-        </dependency>
-
-        <!-- Ticket Registry (JDBC) -->
-        <dependency>
-            <groupId>org.apereo.cas</groupId>
-            <artifactId>cas-server-support-jpa-ticket-registry</artifactId>
+            <artifactId>cas-server-support-json-service-registry</artifactId>
             <version>${cas.version}</version>
         </dependency>
 

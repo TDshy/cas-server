@@ -22,48 +22,12 @@ cas:
     name: https://localhost:8443
     prefix: https://localhost:8443/cas
 
-  # Service Registry (JDBC)
+  # Service Registry (In-Memory via JSON)
   service-registry:
-    jpa:
-      enabled: true
-      url: jdbc:mariadb://shuheyu.cn:3306/ruoyi?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8
-      user: ssm
-      password: Ssm@12345678
-      driver-class: org.mariadb.jdbc.Driver
-      ddl-auto: update
-      show-sql: false
-      properties:
-        hibernate:
-          dialect: org.hibernate.dialect.MariaDBDialect
-          format_sql: true
-          jdbc:
-            batch_size: 10
-            fetch_size: 100
-      pool:
-        min-size: 6
-        max-size: 18
-        max-wait: 2000
-        timeout-millis: 1000
+    json:
+      location: classpath:/services
 
-  # Ticket Registry (JDBC)
-  ticket:
-    registry:
-      jpa:
-        enabled: true
-        url: jdbc:mariadb://shuheyu.cn:3306/ruoyi?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8
-        user: ssm
-        password: Ssm@12345678
-        driver-class: org.mariadb.jdbc.Driver
-        ddl-auto: update
-        show-sql: false
-        properties:
-          hibernate:
-            dialect: org.hibernate.dialect.MariaDBDialect
-        pool:
-          min-size: 6
-          max-size: 18
-          max-wait: 2000
-          timeout-millis: 1000
+  # Ticket Registry (In-Memory - default when cas-server-support-default-ticket-registry is on classpath)
 
   # JDBC Authentication (适配若依框架 sys_user 表)
   authn:
@@ -91,13 +55,19 @@ cas:
 
   # Webflow Settings
   webflow:
-    auto-configuration:
-      gzip:
-        enabled: true
+    gzip:
+      enabled: true
 
   # Theme Configuration
   theme:
     default-theme-name: cas-theme
+
+  # Security Configuration - Web端点排除（绕过CAS认证）
+  security:
+    web:
+      # 添加到CAS默认排除列表中的额外路径
+      ignore-patterns:
+        - /test/public/**
 
 # Spring Configuration
 spring:
@@ -109,28 +79,7 @@ spring:
     cache: false
     mode: HTML
 
-  # Main DataSource for Service/Ticket Registry
-  datasource:
-    url: jdbc:mariadb://shuheyu.cn:3306/ruoyi?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8
-    username: ssm
-    password: Ssm@12345678
-    driver-class-name: org.mariadb.jdbc.Driver
-    hikari:
-      minimum-idle: 5
-      maximum-pool-size: 20
-      idle-timeout: 300000
-      max-lifetime: 1200000
-      connection-timeout: 20000
-
-  # JPA Settings
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: false
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MariaDBDialect
-        format_sql: true
+  # Note: Main DataSource removed - only authn.jdbc uses database now
 
 # Logging
 logging:
