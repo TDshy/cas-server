@@ -1,2 +1,3 @@
 org.apereo.cas.config.WhitelistSecurityConfiguration
 org.apereo.cas.config.DataSourceConfiguration
+org.apereo.cas.config.DruidAuthenticationConfiguration

@@ -94,6 +94,20 @@
             <version>${cas.version}</version>
         </dependency>
 
+        <!-- CAS Core Authentication API - 提供 AbstractUsernamePasswordAuthenticationHandler -->
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-core-authentication-api</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+
+        <!-- CAS JDBC Authentication - 提供 AbstractJdbcUsernamePasswordAuthenticationHandler -->
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-support-jdbc-authentication</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+
         <!-- MariaDB Connector -->
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>
@@ -141,6 +155,14 @@
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-3-starter</artifactId>
             <version>1.2.20</version>
+        </dependency>
+
+        <!-- Lombok - 用于日志注解 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

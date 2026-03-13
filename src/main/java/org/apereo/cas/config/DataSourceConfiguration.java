@@ -1,37 +1,45 @@
 package org.apereo.cas.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
 import javax.sql.DataSource;
 
 /**
  * 数据源配置 - 使用 Druid 连接池
- * 为白名单自动登录提供数据库连接
+ * 从 application.yml 读取数据库连接配置
  */
 @AutoConfiguration
+@EnableConfigurationProperties(DruidDataSourceProperties.class)
 public class DataSourceConfiguration {
+
+    @Autowired
+    private DruidDataSourceProperties properties;
 
     @Bean
     public DataSource dataSource() {
         DruidDataSource dataSource = new DruidDataSource();
-        dataSource.setUrl("jdbc:mariadb://shuheyu.cn:3306/ruoyi?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8");
-        dataSource.setUsername("ssm");
-        dataSource.setPassword("Ssm@12345678");
-        dataSource.setDriverClassName("org.mariadb.jdbc.Driver");
+        
+        // 数据库连接配置
+        dataSource.setUrl(properties.getUrl());
+        dataSource.setUsername(properties.getUsername());
+        dataSource.setPassword(properties.getPassword());
+        dataSource.setDriverClassName(properties.getDriverClassName());
         
         // Druid 连接池配置
-        dataSource.setInitialSize(2);
-        dataSource.setMinIdle(2);
-        dataSource.setMaxActive(5);
-        dataSource.setMaxWait(30000);
+        dataSource.setInitialSize(properties.getInitialSize());
+        dataSource.setMinIdle(properties.getMinIdle());
+        dataSource.setMaxActive(properties.getMaxActive());
+        dataSource.setMaxWait(properties.getMaxWait());
         
         // 监控配置
-        dataSource.setTestWhileIdle(true);
-        dataSource.setTestOnBorrow(false);
-        dataSource.setTestOnReturn(false);
-        dataSource.setValidationQuery("SELECT 1");
+        dataSource.setTestWhileIdle(properties.isTestWhileIdle());
+        dataSource.setTestOnBorrow(properties.isTestOnBorrow());
+        dataSource.setTestOnReturn(properties.isTestOnReturn());
+        dataSource.setValidationQuery(properties.getValidationQuery());
         
         return dataSource;
     }

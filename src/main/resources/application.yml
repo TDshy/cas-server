@@ -29,24 +29,31 @@ cas:
 
   # Ticket Registry (In-Memory - default when cas-server-support-default-ticket-registry is on classpath)
 
-  # JDBC Authentication (适配若依框架 sys_user 表)
+  # Druid 数据源配置
+  datasource:
+    url: jdbc:mariadb://shuheyu.cn:3306/ruoyi?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8
+    username: ssm
+    password: Ssm@12345678
+    driver-class-name: org.mariadb.jdbc.Driver
+    initial-size: 2
+    min-idle: 2
+    max-active: 5
+    max-wait: 30000
+    test-while-idle: true
+    test-on-borrow: false
+    test-on-return: false
+    validation-query: SELECT 1
+
+  # Druid JDBC Authentication (使用自定义 Druid 数据源)
   authn:
-    jdbc:
-      query:
-        - sql: SELECT password FROM sys_user WHERE user_name = ? AND status = '0' AND del_flag = '0'
-          field-password: password
-          password-encoder:
-            type: org.apereo.cas.authentication.MyPasswordEncoder
-          dialect: org.hibernate.dialect.MariaDBDialect
-          driver-class: org.mariadb.jdbc.Driver
-          url: jdbc:mariadb://shuheyu.cn:3306/ruoyi?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8
-          user: ssm
-          password: Ssm@12345678
-          pool:
-            min-size: 2
-            max-size: 10
-            max-wait: 2000
-            timeout-millis: 1000
+    druid:
+      enabled: true
+      name: DruidJdbcAuthenticationHandler
+      order: 0
+      sql: SELECT password, status, del_flag FROM sys_user WHERE user_name = ? AND status = '0' AND del_flag = '0'
+      field-password: password
+      field-disabled: status
+      field-expired: del_flag
 
   # Logout Settings
   logout:
